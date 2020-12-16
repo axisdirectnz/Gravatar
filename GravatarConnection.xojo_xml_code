@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2020r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="1738252287">
+ <ObjName>GravatarConnection</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>URLConnection</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>ContentReceived</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1497516031</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ContentReceived(URL As String, HTTPStatus As Integer, content As String)</SourceLine>
+   <SourceLine>If HTTPStatus = 404 Then</SourceLine>
+   <SourceLine>RaiseEvent NotFound</SourceLine>
+   <SourceLine>Return</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If URL.BeginsWith("HTTPS://www.gravatar.com/avatar/") Then</SourceLine>
+   <SourceLine>Var pic As Picture = Picture.FromData(content)</SourceLine>
+   <SourceLine>RaiseEvent Avatar(pic)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Var d As Dictionary = ParseJSON(content)</SourceLine>
+   <SourceLine>Var v() As Variant = d.value("entry")</SourceLine>
+   <SourceLine>Var entry As Dictionary = v(0)</SourceLine>
+   <SourceLine>Var names As Dictionary = entry.Value("name")</SourceLine>
+   <SourceLine>v = entry.Value("photos")</SourceLine>
+   <SourceLine>Var Avatar As Dictionary = v(0)</SourceLine>
+   <SourceLine>RaiseEvent Found(names.Value("formatted"), entry.Value("currentLocation"), Avatar.Value("value"))</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <Method>
+  <ItemName>GenerateGravatarHash</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>595951615</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function GenerateGravatarHash(email As String) As String</SourceLine>
+   <SourceLine>// Generate Gravatar Hash</SourceLine>
+   <SourceLine>Var m As New MD5Digest</SourceLine>
+   <SourceLine>m.Process(email)</SourceLine>
+   <SourceLine>Var hash As String = EncodeHex(m.Value).Lowercase</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return hash</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>email As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GetProfile</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1440395263</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub GetProfile(email As String)</SourceLine>
+   <SourceLine>me.email = email</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Send("GET", "HTTPS://www.gravatar.com/" + GenerateGravatarHash(email) + ".json")</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>email As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GetAvatar</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>299687935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub GetAvatar(email As String, size As Integer = 80)</SourceLine>
+   <SourceLine>Send("GET", "https://www.gravatar.com/avatar/" + GenerateGravatarHash(email) + "?size=" + size.ToString)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>email As String, size As Integer = 80</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Hook>
+  <ItemName>NotFound</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>Found</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>FullName As String, Location As String, AvatarURL As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>Avatar</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>Value As Picture</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Property>
+  <ItemName>email</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1144942591</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>email As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>email As String</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>AllowCertificateValidation</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HTTPStatusCode</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>email</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
