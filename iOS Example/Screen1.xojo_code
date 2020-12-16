@@ -136,19 +136,13 @@ Begin MobileScreen Screen1
    Begin GravatarConnection Gravatar
       AllowCertificateValidation=   False
       email           =   ""
-      Height          =   32
-      Height          =   "32"
       HTTPStatusCode  =   0
-      Left            =   160
-      Left            =   160
+      Left            =   0
       LockedInPosition=   False
       PanelIndex      =   -1
       Parent          =   ""
       Scope           =   0
-      Top             =   160
-      Top             =   160
-      Width           =   32
-      Width           =   "32"
+      Top             =   0
    End
 End
 #tag EndMobileScreen

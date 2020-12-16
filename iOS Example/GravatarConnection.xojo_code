@@ -18,7 +18,7 @@ Inherits URLConnection
 		    Var names As Dictionary = entry.Value("name")
 		    v = entry.Value("photos")
 		    Var Avatar As Dictionary = v(0)
-		    RaiseEvent Found(names.Value("formatted"), entry.Value("currentLocation"), Avatar.Value("value"))
+		    RaiseEvent Found(names.Lookup("formatted", ""), entry.Lookukp("currentLocation", ""), Avatar.Lookup("value", ""))
 		  End If
 		End Sub
 	#tag EndEvent
@@ -44,8 +44,6 @@ Inherits URLConnection
 
 	#tag Method, Flags = &h0
 		Sub GetProfile(email As String)
-		  me.email = email
-		  
 		  Send("GET", "HTTPS://www.gravatar.com/" + GenerateGravatarHash(email) + ".json")
 		End Sub
 	#tag EndMethod
@@ -62,11 +60,6 @@ Inherits URLConnection
 	#tag Hook, Flags = &h0
 		Event NotFound()
 	#tag EndHook
-
-
-	#tag Property, Flags = &h0
-		email As String
-	#tag EndProperty
 
 
 	#tag ViewBehavior
@@ -125,14 +118,6 @@ Inherits URLConnection
 			InitialValue="0"
 			Type="Integer"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="email"
-			Visible=false
-			Group="Behavior"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
