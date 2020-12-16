@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2020r2.1" FormatVersion="2" MinIDEVersion="20200200">
+<RBProject version="2020r2.1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1738252287">
  <ObjName>GravatarConnection</ObjName>
  <ObjContainerID>0</ObjContainerID>
@@ -31,7 +31,7 @@
    <SourceLine>Var names As Dictionary = entry.Value("name")</SourceLine>
    <SourceLine>v = entry.Value("photos")</SourceLine>
    <SourceLine>Var Avatar As Dictionary = v(0)</SourceLine>
-   <SourceLine>RaiseEvent Found(names.Value("formatted"), entry.Value("currentLocation"), Avatar.Value("value"))</SourceLine>
+   <SourceLine>RaiseEvent Found(names.Lookup("formatted", ""), entry.Lookup("currentLocation", ""), Avatar.Lookup("value", ""))</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -68,8 +68,6 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub GetProfile(email As String)</SourceLine>
-   <SourceLine>me.email = email</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>Send("GET", "HTTPS://www.gravatar.com/" + GenerateGravatarHash(email) + ".json")</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -122,21 +120,6 @@
   <ItemParams>Value As Picture</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
- <Property>
-  <ItemName>email</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1144942591</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>email As String</SourceLine>
-   <SourceLine></SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>email As String</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
- </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>AllowCertificateValidation</ObjName>
@@ -180,12 +163,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>email</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <ItemType>String</ItemType>
-   <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
  </ViewBehavior>
 </block>

@@ -28,6 +28,7 @@ Begin WebPage WebPage1
    _ImplicitInstance=   False
    _mDesignHeight  =   0
    _mDesignWidth   =   0
+   _mName          =   ""
    _mPanelIndex    =   -1
    Begin GravatarConnection Gravatar
       AllowCertificateValidation=   False
@@ -35,8 +36,6 @@ Begin WebPage WebPage1
       Index           =   -2147483648
       LockedInPosition=   False
       Scope           =   2
-      TabIndex        =   "0"
-      TabStop         =   True
    End
    Begin WebImageViewer ImageViewer1
       ControlID       =   ""
@@ -57,7 +56,6 @@ Begin WebPage WebPage1
       Scope           =   2
       SVGData         =   ""
       TabIndex        =   1
-      TabStop         =   True
       Tooltip         =   ""
       Top             =   153
       URL             =   ""
@@ -88,7 +86,6 @@ Begin WebPage WebPage1
       Multiline       =   False
       Scope           =   2
       TabIndex        =   2
-      TabStop         =   True
       Text            =   "Untitled"
       TextAlignment   =   0
       TextColor       =   &c00000000
@@ -122,7 +119,6 @@ Begin WebPage WebPage1
       ReadOnly        =   False
       Scope           =   0
       TabIndex        =   3
-      TabStop         =   True
       Text            =   ""
       TextAlignment   =   0
       Tooltip         =   ""
@@ -151,7 +147,6 @@ Begin WebPage WebPage1
       LockVertical    =   False
       Scope           =   0
       TabIndex        =   4
-      TabStop         =   True
       Tooltip         =   ""
       Top             =   98
       Visible         =   True
