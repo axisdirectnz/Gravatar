@@ -18,7 +18,7 @@ Inherits URLConnection
 		    Var names As Dictionary = entry.Value("name")
 		    v = entry.Value("photos")
 		    Var Avatar As Dictionary = v(0)
-		    RaiseEvent Found(names.Lookup("formatted", ""), entry.Lookukp("currentLocation", ""), Avatar.Lookup("value", ""))
+		    RaiseEvent Found(names.Lookup("formatted", ""), entry.Lookup("currentLocation", ""), Avatar.Lookup("value", ""))
 		  End If
 		End Sub
 	#tag EndEvent
