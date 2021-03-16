@@ -193,6 +193,9 @@ Begin Window Window1
       Width           =   200
    End
    Begin GravatarConnection Gravatar
+      AllowCertificateValidation=   False
+      Enabled         =   True
+      HTTPStatusCode  =   0
       Index           =   -2147483648
       LockedInPosition=   False
       Scope           =   0

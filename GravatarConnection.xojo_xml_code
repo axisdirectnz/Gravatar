@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2020r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2020r2.1" FormatVersion="2" MinIDEVersion="20200200">
 <block type="Module" ID="1738252287">
  <ObjName>GravatarConnection</ObjName>
  <ObjContainerID>0</ObjContainerID>
@@ -12,7 +12,7 @@
   <ItemName>ContentReceived</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>1497516031</PartID>
+  <PartID>531451903</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub ContentReceived(URL As String, HTTPStatus As Integer, content As String)</SourceLine>
@@ -40,14 +40,13 @@
   <ItemName>GenerateGravatarHash</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>595951615</PartID>
+  <PartID>1823219711</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function GenerateGravatarHash(email As String) As String</SourceLine>
    <SourceLine>// Generate Gravatar Hash</SourceLine>
-   <SourceLine>Var m As New MD5Digest</SourceLine>
-   <SourceLine>m.Process(email)</SourceLine>
-   <SourceLine>Var hash As String = EncodeHex(m.Value).Lowercase</SourceLine>
+   <SourceLine>Var hash As String = Crypto.Hash(email.Lowercase.Trim, Crypto.HashAlgorithms.MD5)</SourceLine>
+   <SourceLine>hash = EncodeHex(hash).Lowercase</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return hash</SourceLine>
    <SourceLine></SourceLine>
@@ -61,31 +60,15 @@
   <ItemResult>String</ItemResult>
  </Method>
  <Method>
-  <ItemName>GetProfile</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1440395263</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub GetProfile(email As String)</SourceLine>
-   <SourceLine>Send("GET", "HTTPS://www.gravatar.com/" + GenerateGravatarHash(email) + ".json")</SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>email As String</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
   <ItemName>GetAvatar</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>299687935</PartID>
+  <PartID>1666725887</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub GetAvatar(email As String, size As Integer = 80)</SourceLine>
+   <SourceLine>me.ClearRequestHeaders</SourceLine>
+   <SourceLine>me.RequestHeader("User-Agent") = "*"</SourceLine>
    <SourceLine>Send("GET", "https://www.gravatar.com/avatar/" + GenerateGravatarHash(email) + "?size=" + size.ToString)</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -96,12 +79,32 @@
   <ItemParams>email As String, size As Integer = 80</ItemParams>
   <ItemResult></ItemResult>
  </Method>
+ <Method>
+  <ItemName>GetProfile</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1632122879</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub GetProfile(email As String)</SourceLine>
+   <SourceLine>me.ClearRequestHeaders</SourceLine>
+   <SourceLine>me.RequestHeader("User-Agent") = "*"</SourceLine>
+   <SourceLine>Send("GET", "HTTPS://www.gravatar.com/" + GenerateGravatarHash(email) + ".json")</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>email As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Hook>
-  <ItemName>NotFound</ItemName>
+  <ItemName>Avatar</ItemName>
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams></ItemParams>
+  <ItemParams>Value As Picture</ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
@@ -113,11 +116,11 @@
   <ItemResult></ItemResult>
  </Hook>
  <Hook>
-  <ItemName>Avatar</ItemName>
+  <ItemName>NotFound</ItemName>
   <TextEncoding>134217984</TextEncoding>
   <ItemFlags>33</ItemFlags>
   <SystemFlags>0</SystemFlags>
-  <ItemParams>Value As Picture</ItemParams>
+  <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Hook>
  <ViewBehavior>
