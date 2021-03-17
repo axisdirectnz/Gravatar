@@ -27,9 +27,8 @@ Inherits URLConnection
 	#tag Method, Flags = &h21
 		Private Function GenerateGravatarHash(email As String) As String
 		  // Generate Gravatar Hash
-		  Var m As New MD5Digest
-		  m.Process(email)
-		  Var hash As String = EncodeHex(m.Value).Lowercase
+		  Var hash As String = Crypto.Hash(email.Lowercase.Trim, Crypto.HashAlgorithms.MD5)
+		  hash = EncodeHex(hash).Lowercase
 		  
 		  Return hash
 		  
@@ -38,12 +37,16 @@ Inherits URLConnection
 
 	#tag Method, Flags = &h0
 		Sub GetAvatar(email As String, size As Integer = 80)
+		  me.ClearRequestHeaders
+		  me.RequestHeader("User-Agent") = "*"
 		  Send("GET", "https://www.gravatar.com/avatar/" + GenerateGravatarHash(email) + "?size=" + size.ToString)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub GetProfile(email As String)
+		  me.ClearRequestHeaders
+		  me.RequestHeader("User-Agent") = "*"
 		  Send("GET", "HTTPS://www.gravatar.com/" + GenerateGravatarHash(email) + ".json")
 		End Sub
 	#tag EndMethod

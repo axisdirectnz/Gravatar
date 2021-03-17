@@ -8,7 +8,7 @@ Begin MobileScreen Screen1
    Left            =   0
    TabBarVisible   =   True
    TabIcon         =   0
-   TintColor       =   "&h00000000"
+   TintColor       =   0
    Title           =   "Untitled"
    Top             =   0
    Begin MobileLabel Label1
@@ -135,7 +135,6 @@ Begin MobileScreen Screen1
    End
    Begin GravatarConnection Gravatar
       AllowCertificateValidation=   False
-      email           =   ""
       HTTPStatusCode  =   0
       Left            =   0
       LockedInPosition=   False
